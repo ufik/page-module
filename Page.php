@@ -19,6 +19,10 @@ class Page extends \WebCMS\Module {
 		'Page'
 	);
 	
+	protected $params = array(
+		
+	);
+	
 	public function createRoutes() {
 		
 	}	

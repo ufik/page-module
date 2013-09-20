@@ -15,7 +15,7 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	
 	protected function startup() {
 		parent::startup();
-		
+	
 		$this->repository = $this->em->getRepository('WebCMS\PageModule\Doctrine\Page');
 	}
 
@@ -36,7 +36,6 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	}
 	
 	public function renderDefault($id){
-		$this->reloadContent();
 		
 		$this->template->page = $this->page;
 		$this->template->id = $id;
