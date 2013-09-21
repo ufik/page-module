@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as orm;
  */
 class Page extends \AdminModule\Doctrine\Entity {
 	/**
-	 * @orm\Column
+	 * @orm\Column(type="text")
 	 */
 	private $text;
 	
