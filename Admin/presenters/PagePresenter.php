@@ -59,6 +59,8 @@ class PagePresenter extends \AdminModule\BasePresenter {
 		
 		$this->em->flush();
 		$this->flashMessage($this->translation['Page text has been saved.'], 'success');
+		
+		$this->redirect('this');
 	}
 	
 	private function persistPage(){
