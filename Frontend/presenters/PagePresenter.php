@@ -40,6 +40,17 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 		$this->template->page = $this->page;
 		$this->template->id = $id;
 	}
+	
+	private function persistPage(){
+		$page = new \WebCMS\PageModule\Doctrine\Page;
+		$page->setText($this->translation['Module page default text.']);
+		$page->setPage($this->actualPage);
+	
+		$this->em->persist($page);
+		$this->em->flush();
+		
+		return $page;
+	}
 }
 
 ?>
