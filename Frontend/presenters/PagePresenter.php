@@ -16,7 +16,7 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	protected function startup() {
 		parent::startup();
 	
-		$this->repository = $this->em->getRepository('WebCMS\PageModule\Page');
+		$this->repository = $this->em->getRepository('WebCMS\PageModule\Doctrine\Page');
 	}
 
 	protected function beforeRender() {
@@ -42,7 +42,7 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	}
 	
 	private function persistPage(){
-		$page = new \WebCMS\PageModule\Page;
+		$page = new \WebCMS\PageModule\Doctrine\Page;
 		$page->setText($this->translation['Module page default text.']);
 		$page->setPage($this->actualPage);
 	
@@ -52,18 +52,25 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 		return $page;
 	}
 	
-	public function textBox($context){
-		$page = $context->em->getRepository('WebCMS\PageModule\Page')->findOneBy(array(
-			'page' => $context->actualPage
+	public function textBox($context, $fromPage){
+		$page = $context->em->getRepository('WebCMS\PageModule\Doctrine\Page')->findOneBy(array(
+			'page' => $fromPage
 		));
-		dump($context);
-		die();
 		
-		return 'text';
+		$text = '<h1>' . $fromPage->getTitle() . '</h1>';
+		$text .= $page->getText();
+		
+		return $text;
 	}
 	
-	public function photogalleryBox($context){
-		return 'gallery';
+	public function photogalleryBox($context, $fromPage){
+		$page = $context->em->getRepository('WebCMS\PageModule\Doctrine\Page')->findOneBy(array(
+			'page' => $fromPage
+		));
+		
+		$text = '<h1>' . $fromPage->getTitle() . '</h1>';
+		
+		return $text;
 	}
 }
 
