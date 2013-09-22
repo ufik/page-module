@@ -29,8 +29,8 @@ class Page extends \WebCMS\Module {
 	);
 	
 	public function __construct(){
-		$this->addBox('Page box', 'Page', 'box');
-		$this->addBox('Photogallery box', 'Photogallery', 'box');
+		$this->addBox('Page box', 'Page', 'textBox');
+		$this->addBox('Photogallery box', 'Page', 'photogalleryBox');
 	}
 	
 }

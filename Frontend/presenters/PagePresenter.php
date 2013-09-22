@@ -51,6 +51,14 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 		
 		return $page;
 	}
+	
+	public function textBox(){
+		return 'text';
+	}
+	
+	public function photogalleryBox(){
+		return 'gallery';
+	}
 }
 
 ?>
