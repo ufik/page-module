@@ -1,13 +1,13 @@
 <?php
 
-namespace FrontendModule\PageModule;
+namespace AdminModule\PageModule;
 
 /**
  * Description of PagePresenter
  *
  * @author Tomáš Voslař <tomas.voslar at webcook.cz>
  */
-class PagePresenter extends \FrontendModule\BasePresenter{
+class PhotogalleryPresenter extends \AdminModule\BasePresenter {
 	
 	private $repository;
 	
@@ -15,7 +15,7 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	
 	protected function startup() {
 		parent::startup();
-	
+		
 		$this->repository = $this->em->getRepository('WebCMS\PageModule\Doctrine\Page');
 	}
 
@@ -25,32 +25,17 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	}
 	
 	public function actionDefault($id){
-		
 		$this->page = $this->repository->findOneBy(array(
 			'page' => $this->actualPage
 		));
 		
-		if(!is_object($this->page)){
-			$this->page = $this->persistPage();
-		}
 	}
 	
 	public function renderDefault($id){
+		$this->reloadContent();
 		
 		$this->template->page = $this->page;
 		$this->template->id = $id;
 	}
 	
-	private function persistPage(){
-		$page = new \WebCMS\PageModule\Doctrine\Page;
-		$page->setText($this->translation['Module page default text.']);
-		$page->setPage($this->actualPage);
-	
-		$this->em->persist($page);
-		$this->em->flush();
-		
-		return $page;
-	}
 }
-
-?>

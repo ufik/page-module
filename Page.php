@@ -11,19 +11,26 @@ class Page extends \WebCMS\Module {
 	
 	protected $name = 'Page';
 	
-	protected $version;
-	
 	protected $author = 'Tomáš Voslař';
 	
 	protected $presenters = array(
-		'Page'
+		array(
+			'name' => 'Page',
+			'frontend' => TRUE
+			),
+		array(
+			'name' => 'Photogallery',
+			'frontend' => FALSE
+			),
 	);
 	
 	protected $params = array(
 		
 	);
 	
-	public function createRoutes() {
-		
-	}	
+	public function __construct(){
+		$this->addBox('Page box', 'Page', 'box');
+		$this->addBox('Photogallery box', 'Photogallery', 'box');
+	}
+	
 }
