@@ -1,6 +1,6 @@
 <?php
 
-namespace WebCMS\PageModule\Doctrine;
+namespace WebCMS\PageModule;
 
 use Doctrine\ORM\Mapping as orm;
 

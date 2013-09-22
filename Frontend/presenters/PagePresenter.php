@@ -16,7 +16,7 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	protected function startup() {
 		parent::startup();
 	
-		$this->repository = $this->em->getRepository('WebCMS\PageModule\Doctrine\Page');
+		$this->repository = $this->em->getRepository('WebCMS\PageModule\Page');
 	}
 
 	protected function beforeRender() {
@@ -42,7 +42,7 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	}
 	
 	private function persistPage(){
-		$page = new \WebCMS\PageModule\Doctrine\Page;
+		$page = new \WebCMS\PageModule\Page;
 		$page->setText($this->translation['Module page default text.']);
 		$page->setPage($this->actualPage);
 	
@@ -52,11 +52,17 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 		return $page;
 	}
 	
-	public function textBox(){
+	public function textBox($context){
+		$page = $context->em->getRepository('WebCMS\PageModule\Page')->findOneBy(array(
+			'page' => $context->actualPage
+		));
+		dump($context);
+		die();
+		
 		return 'text';
 	}
 	
-	public function photogalleryBox(){
+	public function photogalleryBox($context){
 		return 'gallery';
 	}
 }
