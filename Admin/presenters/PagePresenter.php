@@ -46,7 +46,7 @@ class PagePresenter extends \AdminModule\BasePresenter {
 		
 		$form->addTextArea('text', 'Page text')->setAttribute('class', 'form-control editor')->setDefaultValue($this->page->getText());
 				
-		$form->addSubmit('submit', 'Save');
+		$form->addSubmit('submit', 'Save')->setAttribute('class', 'btn btn-success');
 		$form->onSuccess[] = callback($this, 'pageFormSubmitted');
 		
 		return $form;
