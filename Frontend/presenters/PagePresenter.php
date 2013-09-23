@@ -37,8 +37,15 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	
 	public function renderDefault($id){
 		
+		$this->template->photogallery = $this->getPhotogallery($this->page);
 		$this->template->page = $this->page;
 		$this->template->id = $id;
+	}
+	
+	public function getPhotogallery($page){
+		return $this->em->getRepository('WebCMS\PageModule\Doctrine\Photogallery')->findOneBy(array(
+			'page' => $page
+		));
 	}
 	
 	private function persistPage(){

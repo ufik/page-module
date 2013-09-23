@@ -19,14 +19,13 @@ class Photogallery extends \AdminModule\Doctrine\Entity{
 	private $name;
 	
 	/**
-	 * @orm\ManyToOne(targetEntity="Page")
+	 * @orm\OneToOne(targetEntity="Page")
 	 * @orm\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	private $page;
 	
 	/**
 	 * @orm\Column(type="text")
-	 * @var type 
 	 */
 	private $text;
 	
@@ -40,7 +39,7 @@ class Photogallery extends \AdminModule\Doctrine\Entity{
 		return $this->name;
 	}
 
-	public function setName(type $name) {
+	public function setName($name) {
 		$this->name = $name;
 	}
 
@@ -56,7 +55,7 @@ class Photogallery extends \AdminModule\Doctrine\Entity{
 		return $this->text;
 	}
 
-	public function setText(type $text) {
+	public function setText($text) {
 		$this->text = $text;
 	}	
 	
@@ -64,7 +63,7 @@ class Photogallery extends \AdminModule\Doctrine\Entity{
 		return $this->photos;
 	}
 
-	public function setPhotos(Array $photos) {
+	public function setPhotos($photos) {
 		$this->photos = $photos;
 	}
 }

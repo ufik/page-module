@@ -14,20 +14,17 @@ class Photo extends \AdminModule\Doctrine\Entity{
 	
 	/**
 	 * @orm\Column(type="text")
-	 * @var type 
 	 */
 	private $title;
 	
 	/**
 	 * @orm\ManyToOne(targetEntity="Photogallery")
 	 * @orm\JoinColumn(name="photogallery_id", referencedColumnName="id", onDelete="CASCADE")
-	 * @var Int 
 	 */
 	private $photogallery;
 
 	/**
 	 * @orm\Column(type="text")
-	 * @var type 
 	 */
 	private $path;
 	
@@ -43,7 +40,7 @@ class Photo extends \AdminModule\Doctrine\Entity{
 		return $this->photogallery;
 	}
 
-	public function setPhotogallery(Int $photogallery) {
+	public function setPhotogallery($photogallery) {
 		$this->photogallery = $photogallery;
 	}
 
@@ -51,7 +48,7 @@ class Photo extends \AdminModule\Doctrine\Entity{
 		return $this->path;
 	}
 
-	public function setPath(type $path) {
+	public function setPath($path) {
 		$this->path = $path;
 	}
 

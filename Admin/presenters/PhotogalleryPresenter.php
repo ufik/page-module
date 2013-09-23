@@ -35,11 +35,13 @@ class PhotogalleryPresenter extends \AdminModule\BasePresenter {
 		$this->photogallery = $this->em->getRepository('WebCMS\PageModule\Doctrine\Photogallery')->findOneBy(array(
 			'page' => $this->page
 		));
+
 	}
 	
 	public function renderDefault($id){
 		$this->reloadContent();
 		
+		$this->template->photogallery = $this->photogallery;
 		$this->template->page = $this->page;
 		$this->template->id = $id;
 	}
@@ -53,42 +55,53 @@ class PhotogalleryPresenter extends \AdminModule\BasePresenter {
 		$form->addSubmit('submit', 'Save');
 		$form->onSuccess[] = callback($this, 'photogalleryFormSubmitted');
 		
+		if(is_object($this->photogallery))
+			$form->setDefaults($this->photogallery->toArray());
+		
 		return $form;
 	}
 	
 	public function photogalleryFormSubmitted(\Nette\Forms\Form $form){
 		$values = $form->getValues();
 		
-		if($this->photogallery->getId())
-			$photoGallery = $this->photogallery;
+		if(is_object($this->photogallery)){
+			$photogallery = $this->photogallery;
+			
+			// delete old photos and save new ones
+			$qb = $this->em->createQueryBuilder();
+			$qb->delete('WebCMS\PageModule\Doctrine\Photo', 'l')
+					->where('l.photogallery = ?1')
+					->setParameter(1, $photogallery)
+					->getQuery()
+					->execute();
+		}
 		else
-			$photoGallery = new \WebCMS\PageModule\Doctrine\Photogallery;
+			$photogallery = new \WebCMS\PageModule\Doctrine\Photogallery;
 		
 		$photogallery->setName($values->name);
 		$photogallery->setText($values->text);
+		$photogallery->setPage($this->page);
 		
-		// delete old photos and save new ones
-		$qb->delete('WebCMS\PageModule\Doctrine\Photo', 'l')
-				->where('l.photogallery = ?1')
-				->setParameter(1, $photogallery)
-				->getQuery()
-				->execute();
+		$this->em->persist($photogallery);
 		
-		$counter = 0;
-		foreach($_POST['files'] as $path){
-			
-			$photo = new \WebCMS\PageModule\Doctrine\Photo;
-			$photo->setTitle($_POST['fileNames'][$counter]);
-			$photo->setPath($path);
-			$photo->setPhotogallery($photogallery);
-			
-			$this->em->persist($photo);
-			
-			$counter++;
+		if(array_key_exists('files', $_POST)){
+			$counter = 0;
+			foreach($_POST['files'] as $path){
+
+				$photo = new \WebCMS\PageModule\Doctrine\Photo;
+				$photo->setTitle($_POST['fileNames'][$counter]);
+				$photo->setPath($path);
+				$photo->setPhotogallery($photogallery);
+
+				$this->em->persist($photo);
+
+				$counter++;
+			}
 		}
 		
 		$this->em->flush();
 		$this->flashMessage('Photogallery has been saved.', 'success');
+		$this->redirect('this');
 	}
 	
 }
