@@ -8,7 +8,7 @@ PROGRESS
 
 This module is currently under development. No tags has been created.
 
-INSTALlATION
+INSTALLATION
 -----------
 
 Add this line into your compser.json file.
