@@ -6,13 +6,13 @@ Module for WebCMS2. Contains wysiwyg editor for saving text, photogallery, video
 PROGRESS
 --------
 
-This module is currently under development. No tags has been created yet.
+This module is currently under development. No tags has been created.
 
-INSTALATION
+INSTALlATION
 -----------
 
 Add this line into your compser.json file.
 
 ```
 "webcms2/page-module" : "dev-master"
-´´´
+```
