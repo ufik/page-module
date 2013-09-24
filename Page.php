@@ -22,6 +22,18 @@ class Page extends \WebCMS\Module {
 			'name' => 'Photogallery',
 			'frontend' => FALSE
 			),
+		array(
+			'name' => 'Videogallery',
+			'frontend' => FALSE
+			),
+		array(
+			'name' => 'Contact',
+			'frontend' => FALSE
+			),
+		array(
+			'name' => 'Settings',
+			'frontend' => FALSE
+			)
 	);
 	
 	protected $params = array(
