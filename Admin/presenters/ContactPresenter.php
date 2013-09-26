@@ -31,6 +31,14 @@ class ContactPresenter extends \AdminModule\BasePresenter {
 		));
 	}
 	
+	public function createComponentContactForm(){
+		
+		$settings = array();
+		$settings[] = $this->settings->get('Map embded', 'pageModule' . $this->actualPage->getId(), 'textarea', array());
+		
+		return $this->createSettingsForm($settings);
+	}
+	
 	public function renderDefault($id){
 		$this->reloadContent();
 		

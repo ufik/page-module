@@ -3,6 +3,10 @@
 	{!$page->getText()}
 	
 	<br class="clearfix" />
+
+	{if $settings->get('Show map', 'pageModule' . $actualPage->getId())->getValue()}
+		{!$settings->get('Map embded', 'pageModule' . $actualPage->getId())->getValue()}
+	{/if}
 	
 	{if is_object($photogallery)}
 		{foreach $photogallery->getPhotos() as $photo}

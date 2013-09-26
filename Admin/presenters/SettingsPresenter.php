@@ -4,7 +4,7 @@ namespace AdminModule\PageModule;
 
 /**
  * Description of PagePresenter
- *
+ * TODO create base presenter for page module
  * @author Tomáš Voslař <tomas.voslar at webcook.cz>
  */
 class SettingsPresenter extends \AdminModule\BasePresenter {
@@ -30,9 +30,18 @@ class SettingsPresenter extends \AdminModule\BasePresenter {
 		));
 	}
 	
+	public function createComponentSettingsForm(){
+		
+		$settings = array();
+		$settings[] = $this->settings->get('Show map', 'pageModule' . $this->actualPage->getId(), 'checkbox', array());
+		
+		return $this->createSettingsForm($settings);
+	}
+	
 	public function renderDefault($id){
 		$this->reloadContent();
 		
+		$this->template->config = $this->settings->getSection('pageModule');
 		$this->template->page = $this->page;
 		$this->template->id = $id;
 	}
