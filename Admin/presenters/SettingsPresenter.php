@@ -24,7 +24,7 @@ class SettingsPresenter extends \AdminModule\BasePresenter {
 		
 	}
 	
-	public function actionDefault($id){
+	public function actionDefault($idPage){
 		$this->page = $this->repository->findOneBy(array(
 			'page' => $this->actualPage
 		));
@@ -39,12 +39,12 @@ class SettingsPresenter extends \AdminModule\BasePresenter {
 		return $this->createSettingsForm($settings);
 	}
 	
-	public function renderDefault($id){
+	public function renderDefault($idPage){
 		$this->reloadContent();
 		
 		$this->template->config = $this->settings->getSection('pageModule');
 		$this->template->page = $this->page;
-		$this->template->id = $id;
+		$this->template->idPage = $idPage;
 	}
 	
 	

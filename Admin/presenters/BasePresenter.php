@@ -24,17 +24,17 @@ class BasePresenter extends \AdminModule\BasePresenter {
 		
 	}
 	
-	public function actionDefault($id){
+	public function actionDefault(){
 		$this->page = $this->repository->findOneBy(array(
 			'page' => $this->actualPage
 		));
 	}
 	
-	public function renderDefault($id){
+	public function renderDefault($idPage){
 		$this->reloadContent();
 		
 		$this->template->page = $this->page;
-		$this->template->id = $id;
+		$this->template->idPage = $idPage;
 	}
 	
 	

@@ -27,7 +27,7 @@ class VideogalleryPresenter extends \AdminModule\BasePresenter {
 		
 	}
 	
-	public function actionDefault($id){
+	public function actionDefault($idPage){
 		$this->page = $this->repository->findOneBy(array(
 			'page' => $this->actualPage
 		));
@@ -38,12 +38,12 @@ class VideogalleryPresenter extends \AdminModule\BasePresenter {
 
 	}
 	
-	public function renderDefault($id){
+	public function renderDefault($idPage){
 		$this->reloadContent();
 		
 		$this->template->videogallery = $this->videogallery;
 		$this->template->page = $this->page;
-		$this->template->id = $id;
+		$this->template->idPage = $idPage;
 	}
 	
 	/*public function createComponentPhotogalleryForm(){
