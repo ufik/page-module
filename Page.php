@@ -16,7 +16,8 @@ class Page extends \WebCMS\Module {
 	protected $presenters = array(
 		array(
 			'name' => 'Page',
-			'frontend' => TRUE
+			'frontend' => TRUE,
+			'parameters' => FALSE
 			),
 		array(
 			'name' => 'Photogallery',
