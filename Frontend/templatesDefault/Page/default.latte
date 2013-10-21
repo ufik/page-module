@@ -1,5 +1,8 @@
 {block #content}
-	<h1>{$actualPage->getTitle()}</h1>
+	{if !$settings->get('Hide title', 'pageModule' . $actualPage->getId(), 'checkbox')->getValue()}
+		<h1>{$actualPage->getTitle()}</h1>
+	{/if}
+	
 	{!$page->getText()}
 	
 	<br class="clearfix" />

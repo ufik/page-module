@@ -35,6 +35,7 @@ class SettingsPresenter extends \AdminModule\BasePresenter {
 		$settings = array();
 		$settings[] = $this->settings->get('Show map', 'pageModule' . $this->actualPage->getId(), 'checkbox', array());
 		$settings[] = $this->settings->get('Enable tracing', 'pageModule' . $this->actualPage->getId(), 'checkbox', array());
+		$settings[] = $this->settings->get('Hide title', 'pageModule' . $this->actualPage->getId(), 'checkbox', array());
 		
 		return $this->createSettingsForm($settings);
 	}
