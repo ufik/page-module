@@ -58,7 +58,7 @@ class PagePresenter extends \AdminModule\BasePresenter {
 		$this->page->setText($values->text);
 		
 		$this->em->flush();
-		$this->flashMessage($this->translation['Page text has been saved.'], 'success');
+		$this->flashMessage('Page text has been saved.', 'success');
 		
 		$this->redirect('this');
 	}
