@@ -67,5 +67,3 @@ class Photogallery extends \AdminModule\Doctrine\Entity{
 		$this->photos = $photos;
 	}
 }
-
-?>

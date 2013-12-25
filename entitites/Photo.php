@@ -53,5 +53,3 @@ class Photo extends \AdminModule\Doctrine\Entity{
 	}
 
 }
-
-?>
