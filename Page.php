@@ -42,6 +42,8 @@ class Page extends \WebCMS\Module {
 	);
 	
 	protected $cloneable = true;
+        
+        protected $translatable = true;
 	
 	public function __construct(){
 		$this->addBox('Page box', 'Page', 'textBox');
@@ -118,4 +120,28 @@ class Page extends \WebCMS\Module {
 		
 		}
 	}
+        
+        public function translateData($em, $language, $from, $to, \Webcook\Translator\ITranslator $translator){
+            $pages = $em->getRepository('AdminModule\Page')->findBy(array(
+			'moduleName' => $this->name,
+			'language' => $language
+		));
+            
+            foreach($pages as $p){
+                
+                $page = $em->getRepository('WebCMS\PageModule\Doctrine\Page')->findOneBy(array(
+                        'page' => $p
+                    ));
+                
+                if(is_object($page)){
+                
+                    $t = $translator->translate($page->getText(), $from, $to);
+                    
+                    $page->setText($t->getTranslation());
+                
+                }
+            }
+            
+            $em->flush();
+        }
 }
