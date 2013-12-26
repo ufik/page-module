@@ -41,7 +41,7 @@ class Page extends \WebCMS\Module {
 		
 	);
 	
-	protected $clonable = true;
+	protected $cloneable = true;
 	
 	public function __construct(){
 		$this->addBox('Page box', 'Page', 'textBox');
@@ -67,51 +67,55 @@ class Page extends \WebCMS\Module {
 			'page' => $oldPage
 		));
 		
-		// page cloning
-		$new = new Doctrine\Page;
-		$new->setText($old->getText());
-		$new->setPage($transform[$oldPage->getId()]);
+		if(is_object($old)){
 		
-		// photogallery
-		$oldPhotogallery = $em->getRepository('WebCMS\PageModule\Doctrine\Photogallery')->findOneBy(array(
-			'page' => $old
-		));
+			// page cloning
+			$new = new Doctrine\Page;
+			$new->setText($old->getText());
+			$new->setPage($transform[$oldPage->getId()]);
+
+			// photogallery
+			$oldPhotogallery = $em->getRepository('WebCMS\PageModule\Doctrine\Photogallery')->findOneBy(array(
+				'page' => $old
+			));
+
+			$em->persist($new);
+
+			$newPhotogallery = new Doctrine\Photogallery;
+			$newPhotogallery->setName($oldPhotogallery->getName());
+			$newPhotogallery->setText($oldPhotogallery->getText());
+			$newPhotogallery->setPage($new);
+
+			$em->persist($newPhotogallery);
+
+			// photos of photogallery
+			foreach($oldPhotogallery->getPhotos() as $photo){
+				$newPhoto = new Doctrine\Photo;
+				$newPhoto->setPath($photo->getPath());
+				$newPhoto->setTitle($photo->getTitle());
+				$newPhoto->setPhotogallery($newPhotogallery);
+
+				$em->persist($newPhoto);
+			}
+
+			// settings
+			$settings = $em->getRepository('AdminModule\Setting')->findBy(array(
+				'section' => 'pageModule' . $oldPage->getId(),
+				'language' => $oldLang
+			));
+
+			foreach($settings as $s){
+				$newSetting = new \AdminModule\Setting;
+				$newSetting->setSection('pageModule' . $transform[$oldPage->getId()]->getId());
+				$newSetting->setLanguage($transform[$oldPage->getId()]->getLanguage());
+				$newSetting->setOptions($s->getOptions());
+				$newSetting->setType($s->getType());
+				$newSetting->setValue($s->getValue());
+				$newSetting->setKey($s->getKey());
+
+				$em->persist($newSetting);
+			}
 		
-		$em->persist($new);
-		
-		$newPhotogallery = new Doctrine\Photogallery;
-		$newPhotogallery->setName($oldPhotogallery->getName());
-		$newPhotogallery->setText($oldPhotogallery->getText());
-		$newPhotogallery->setPage($new);
-		
-		$em->persist($newPhotogallery);
-		
-		// photos of photogallery
-		foreach($oldPhotogallery->getPhotos() as $photo){
-			$newPhoto = new Doctrine\Photo;
-			$newPhoto->setPath($photo->getPath());
-			$newPhoto->setTitle($photo->getTitle());
-			$newPhoto->setPhotogallery($newPhotogallery);
-			
-			$em->persist($newPhoto);
-		}
-		
-		// settings
-		$settings = $em->getRepository('AdminModule\Setting')->findBy(array(
-			'section' => 'pageModule' . $oldPage->getId(),
-			'language' => $oldLang
-		));
-		
-		foreach($settings as $s){
-			$newSetting = new \AdminModule\Setting;
-			$newSetting->setSection('pageModule' . $transform[$oldPage->getId()]->getId());
-			$newSetting->setLanguage($transform[$oldPage->getId()]->getLanguage());
-			$newSetting->setOptions($s->getOptions());
-			$newSetting->setType($s->getType());
-			$newSetting->setValue($s->getValue());
-			$newSetting->setKey($s->getKey());
-			
-			$em->persist($newSetting);
 		}
 	}
 }
