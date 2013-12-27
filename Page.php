@@ -82,24 +82,26 @@ class Page extends \WebCMS\Module {
 			));
 
 			$em->persist($new);
+                        
+                        if(is_object($oldPhotogallery)){
+                            $newPhotogallery = new Doctrine\Photogallery;
+                            $newPhotogallery->setName($oldPhotogallery->getName());
+                            $newPhotogallery->setText($oldPhotogallery->getText());
+                            $newPhotogallery->setPage($new);
 
-			$newPhotogallery = new Doctrine\Photogallery;
-			$newPhotogallery->setName($oldPhotogallery->getName());
-			$newPhotogallery->setText($oldPhotogallery->getText());
-			$newPhotogallery->setPage($new);
+                            $em->persist($newPhotogallery);
 
-			$em->persist($newPhotogallery);
+                            // photos of photogallery
+                            foreach($oldPhotogallery->getPhotos() as $photo){
+                                    $newPhoto = new Doctrine\Photo;
+                                    $newPhoto->setPath($photo->getPath());
+                                    $newPhoto->setTitle($photo->getTitle());
+                                    $newPhoto->setPhotogallery($newPhotogallery);
 
-			// photos of photogallery
-			foreach($oldPhotogallery->getPhotos() as $photo){
-				$newPhoto = new Doctrine\Photo;
-				$newPhoto->setPath($photo->getPath());
-				$newPhoto->setTitle($photo->getTitle());
-				$newPhoto->setPhotogallery($newPhotogallery);
-
-				$em->persist($newPhoto);
-			}
-
+                                    $em->persist($newPhoto);
+                            }
+                        }
+                        
 			// settings
 			$settings = $em->getRepository('AdminModule\Setting')->findBy(array(
 				'section' => 'pageModule' . $oldPage->getId(),
