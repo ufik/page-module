@@ -64,7 +64,12 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 			'page' => $fromPage
 		));
 		
-		$text = '<h1>' . $fromPage->getTitle() . '</h1>';
+		$text = "";
+		
+		if(!$context->settings->get('Hide title', 'pageModule' . $fromPage->getId(), 'checkbox')->getValue()){
+			$text = '<h1>' . $fromPage->getTitle() . '</h1>';
+		}
+		
 		$text .= $page->getText();
 		
 		return $text;
