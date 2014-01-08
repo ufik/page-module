@@ -17,5 +17,5 @@ INSTALLATION
 Add this line into your compser.json file.
 
 ```
-"webcms2/page-module" : "dev-master"
+"webcms2/page-module" : "0.*@dev"
 ```
