@@ -17,14 +17,18 @@ class BasePresenter extends \AdminModule\BasePresenter {
 		parent::startup();
 		
 		$this->repository = $this->em->getRepository('WebCMS\PageModule\Doctrine\Page');
+
 	}
 
 	protected function beforeRender() {
 		parent::beforeRender();
-		
+                
+                if($this->actualPage->getRedirect() !== null){
+                    $this->flashMessage('This page is not visible due to redirect.', 'info');
+                }
 	}
 	
-	public function actionDefault(){
+	public function actionDefault($idPage){
 		$this->page = $this->repository->findOneBy(array(
 			'page' => $this->actualPage
 		));

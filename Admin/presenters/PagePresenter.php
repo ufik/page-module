@@ -7,7 +7,7 @@ namespace AdminModule\PageModule;
  *
  * @author Tomáš Voslař <tomas.voslar at webcook.cz>
  */
-class PagePresenter extends \AdminModule\BasePresenter {
+class PagePresenter extends BasePresenter {
 	
 	private $repository;
 	
