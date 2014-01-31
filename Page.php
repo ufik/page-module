@@ -45,6 +45,8 @@ class Page extends \WebCMS\Module {
         
         protected $translatable = true;
 	
+        protected $searchable = true;
+        
 	public function __construct(){
 		$this->addBox('Page box', 'Page', 'textBox');
 		$this->addBox('Photogallery box', 'Page', 'photogalleryBox');
@@ -145,5 +147,39 @@ class Page extends \WebCMS\Module {
             }
             
             $em->flush();
+        }
+        
+        public function search(\Doctrine\ORM\EntityManager $em, $phrase, \AdminModule\Language $language){
+            
+            $qb = $em->createQueryBuilder();
+            
+            $query = $qb->select('c.title, c.path')
+                    ->from('WebCMS\PageModule\Doctrine\Page', 'a')
+                    ->join('AdminModule\Page', 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = a.page')
+                    ->where("c.moduleName = 'Page'")
+                    ->andwhere('a.text LIKE :word')
+                    ->andWhere('c.language = :language')
+                    ->setParameter('word', '%' . $phrase . '%')
+                    ->setParameter('language', $language)
+                    ->groupBy('c.id')
+                    ->getQuery();
+            
+            $pages = $query->getResult();
+            
+            $results = array();
+            foreach($pages as $r){
+                
+                $url = ($language->getDefaultFrontend() ? '' : $language->getAbbr() . '/') . $r['path'];
+                
+                $result = new \WebCMS\SearchModule\SearchResult;
+                $result->setTitle($r['title']);
+                $result->setUrl($url);
+                $result->setPerex('');
+                $result->setRate($query->getHint($phrase));
+                
+                $results[] = $result;
+            }
+            
+            return $results;
         }
 }
