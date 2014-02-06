@@ -60,7 +60,7 @@ class Page extends \WebCMS\Module {
 
     private function clonePage($em, $oldPage, $transform, $oldLang) {
 
-	$old = $em->getRepository('WebCMS\PageModule\Doctrine\Page')->findOneBy(array(
+	$old = $em->getRepository('WebCMS\PageModule\Entity\Page')->findOneBy(array(
 	    'page' => $oldPage
 	));
 
@@ -125,7 +125,7 @@ class Page extends \WebCMS\Module {
 
 	foreach ($pages as $p) {
 
-	    $page = $em->getRepository('WebCMS\PageModule\Doctrine\Page')->findOneBy(array(
+	    $page = $em->getRepository('WebCMS\PageModule\Entity\Page')->findOneBy(array(
 		'page' => $p
 	    ));
 
@@ -145,7 +145,7 @@ class Page extends \WebCMS\Module {
 	$qb = $em->createQueryBuilder();
 
 	$query = $qb->select('c.title, c.path')
-	    ->from('WebCMS\PageModule\Doctrine\Page', 'a')
+	    ->from('WebCMS\PageModule\Entity\Page', 'a')
 	    ->join('AdminModule\Page', 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = a.page')
 	    ->where("c.moduleName = 'Page'")
 	    ->andwhere('a.text LIKE :word')
