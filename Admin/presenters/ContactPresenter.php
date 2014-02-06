@@ -16,7 +16,6 @@ class ContactPresenter extends \AdminModule\BasePresenter {
 	protected function startup() {
 		parent::startup();
 		
-		$this->scriptHandler->addScript(getcwd() . '/../libs/webcms2/page-module/Admin/templates/js/contact.js');
 		$this->repository = $this->em->getRepository('WebCMS\PageModule\Entity\Page');
 	}
 
