@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as orm;
  * @orm\Table(name="pageModulePhoto")
  * @author Tomáš Voslař <tomas.voslar at webcook.cz>
  */
-class Photo extends \Webcook\Entity\Entity {
+class Photo extends \WebCMS\Entity\Entity {
 
     /**
      * @orm\Column(type="text")
