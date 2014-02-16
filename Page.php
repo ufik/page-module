@@ -46,7 +46,7 @@ class Page extends \WebCMS\Module {
     }
 
     public function cloneData($em, $oldLang, $newLang, $transform) {
-	$toClone = $em->getRepository('AdminModule\Page')->findBy(array(
+	$toClone = $em->getRepository('WebCMS\Entity\Page')->findBy(array(
 	    'moduleName' => $this->name,
 	    'language' => $oldLang
 	));
@@ -118,7 +118,7 @@ class Page extends \WebCMS\Module {
     }
 
     public function translateData($em, $language, $from, $to, \Webcook\Translator\ITranslator $translator) {
-	$pages = $em->getRepository('AdminModule\Page')->findBy(array(
+	$pages = $em->getRepository('WebCMS\Entity\Page')->findBy(array(
 	    'moduleName' => $this->name,
 	    'language' => $language
 	));
@@ -146,7 +146,7 @@ class Page extends \WebCMS\Module {
 
 	$query = $qb->select('c.title, c.path')
 	    ->from('WebCMS\PageModule\Entity\Page', 'a')
-	    ->join('AdminModule\Page', 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = a.page')
+	    ->join('WebCMS\Entity\Page', 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = a.page')
 	    ->where("c.moduleName = 'Page'")
 	    ->andwhere('a.text LIKE :word')
 	    ->andWhere('c.language = :language')

@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminModule\PageModule;
+namespace AdminModule\PageModule\PageModule;
 
 /**
  * Description of PagePresenter
