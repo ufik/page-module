@@ -13,13 +13,13 @@ class PhotogalleryPresenter extends \AdminModule\BasePresenter {
 	
 	private $page;
 	
-	/* @var \WebCMS\PageModule\Doctrine\Photogallery */
+	/* @var \WebCMS\PageModule\Entity\Photogallery */
 	private $photogallery;
 	
 	protected function startup() {
 		parent::startup();
 		
-		$this->repository = $this->em->getRepository('WebCMS\PageModule\Doctrine\Page');
+		$this->repository = $this->em->getRepository('WebCMS\PageModule\Entity\Page');
 	}
 
 	protected function beforeRender() {
@@ -32,7 +32,7 @@ class PhotogalleryPresenter extends \AdminModule\BasePresenter {
 			'page' => $this->actualPage
 		));
 		
-		$this->photogallery = $this->em->getRepository('WebCMS\PageModule\Doctrine\Photogallery')->findOneBy(array(
+		$this->photogallery = $this->em->getRepository('WebCMS\PageModule\Entity\Photogallery')->findOneBy(array(
 			'page' => $this->page
 		));
 
@@ -69,14 +69,14 @@ class PhotogalleryPresenter extends \AdminModule\BasePresenter {
 			
 			// delete old photos and save new ones
 			$qb = $this->em->createQueryBuilder();
-			$qb->delete('WebCMS\PageModule\Doctrine\Photo', 'l')
+			$qb->delete('WebCMS\PageModule\Entity\Photo', 'l')
 					->where('l.photogallery = ?1')
 					->setParameter(1, $photogallery)
 					->getQuery()
 					->execute();
 		}
 		else
-			$photogallery = new \WebCMS\PageModule\Doctrine\Photogallery;
+			$photogallery = new \WebCMS\PageModule\Entity\Photogallery;
 		
 		$photogallery->setName($values->name);
 		$photogallery->setText($values->text);
@@ -88,7 +88,7 @@ class PhotogalleryPresenter extends \AdminModule\BasePresenter {
 			$counter = 0;
 			foreach($_POST['files'] as $path){
 
-				$photo = new \WebCMS\PageModule\Doctrine\Photo;
+				$photo = new \WebCMS\PageModule\Entity\Photo;
 				$photo->setTitle($_POST['fileNames'][$counter]);
 				$photo->setPath($path);
 				$photo->setPhotogallery($photogallery);

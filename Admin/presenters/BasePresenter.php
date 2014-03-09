@@ -16,7 +16,7 @@ class BasePresenter extends \AdminModule\BasePresenter {
 	protected function startup() {
 		parent::startup();
 		
-		$this->repository = $this->em->getRepository('WebCMS\PageModule\Doctrine\Page');
+		$this->repository = $this->em->getRepository('WebCMS\PageModule\Entity\Page');
 
 	}
 

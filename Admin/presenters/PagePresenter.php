@@ -16,7 +16,7 @@ class PagePresenter extends BasePresenter {
 	protected function startup() {
 		parent::startup();
 		
-		$this->repository = $this->em->getRepository('WebCMS\PageModule\Doctrine\Page');
+		$this->repository = $this->em->getRepository('WebCMS\PageModule\Entity\Page');
 	}
 
 	protected function beforeRender() {
@@ -64,7 +64,7 @@ class PagePresenter extends BasePresenter {
 	}
 	
 	private function persistPage(){
-		$page = new \WebCMS\PageModule\Doctrine\Page;
+		$page = new \WebCMS\PageModule\Entity\Page;
 		$page->setText($this->translation['Module page default text.']);
 		$page->setPage($this->actualPage);
 	
