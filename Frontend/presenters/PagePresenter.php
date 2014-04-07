@@ -76,15 +76,18 @@ class PagePresenter extends \FrontendModule\BasePresenter{
 	}
 	
 	public function photogalleryBox($context, $fromPage){
-		$page = $context->em->getRepository('WebCMS\PageModule\Entity\Page')-
-                        'page' => $fromPage
-                ));
+		
+		$page = $context->em->getRepository('WebCMS\PageModule\Entity\Page')->findOneBy(array(
+			'page' => $fromPage
+		));
 
 		$template = $context->createTemplate();
 		$template->page = $page;
-		$template->photogallery = $context->em->getRepository('WebCMS\PageMod
-
-		$template->setFile('../app/templates/page-module/Page/boxes/photogall
+		$template->photogallery = $context->em->getRepository('WebCMS\PageModule\Entity\Photogallery')->findOneBy(array('page' => $page));
+		
+		$template->setFile('../app/templates/page-module/Page/boxes/photogallery.latte');		
+		
+		
 		return $template;
 	}
 }
