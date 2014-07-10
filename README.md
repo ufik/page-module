@@ -13,5 +13,5 @@ INSTALLATION
 Add this line into your compser.json file.
 
 ```
-"webcms2/page-module" : "1.*@dev"
+"webcms2/page-module" : "~0.1@dev"
 ```
