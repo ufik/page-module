@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs" id="myTab">
-  <li {if $active == "page"}class="active"{/if}><a class="ajax" n:href="Page:default idPage => $idPage">{_'Page'}</a></li>
-  <li {if $active == "photogallery"}class="active"{/if}><a class="ajax" n:href="Photogallery:default idPage => $idPage">{_'Photogallery'}</a></li>
-  <li {if $active == "contact"}class="active"{/if}><a class="ajax" n:href="Contact:default idPage => $idPage">{_'Contact'}</a></li>
-  <li {if $active == "settings"}class="active"{/if}><a class="ajax" n:href="Settings:default idPage => $idPage">{_'Settings'}</a></li>
+  <li {if $active == "page"}class="active"{/if}><a class="ajax contentTab" n:href="Page:default idPage => $idPage">{_'Page'}</a></li>
+  <li {if $active == "photogallery"}class="active"{/if}><a class="ajax photogalleryTab" n:href="Photogallery:default idPage => $idPage">{_'Photogallery'}</a></li>
+  <li {if $active == "contact"}class="active"{/if}><a class="ajax contactTab" n:href="Contact:default idPage => $idPage">{_'Contact'}</a></li>
+  <li {if $active == "settings"}class="active"{/if}><a class="ajax settingsTab" n:href="Settings:default idPage => $idPage">{_'Settings'}</a></li>
   {include ../../../webcms2/AdminModule/templates/system/boxes.latte id => $idPage}
 </ul>

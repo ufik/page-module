@@ -1,11 +1,12 @@
 {block content}
-	
-	{include ../tabs.latte active => 'photogallery'}
-	
+<div class="page-heading">
 	<h1>{$actualPage->getTitle()} - {_'Photogallery'}</h1>
-	
+	{include ../tabs.latte active => 'photogallery'}
+</div>
+
+
 	{form photogalleryForm}
-		
+
 	<div class="panel-group" id="accordion">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -17,13 +18,30 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse in">
       <div class="panel-body">
-       
-		<div class="form-group">  
+
+		<div class="form-group">
 			{label name /} {input name class => 'form-control'}
 		</div>
-			
-		<div class="form-group">  
-			{label text /} {input text class => 'editor'}
+
+		<a n:href=":Admin:Filesystem:default dialog => true, multiple => true" data-container="#pictures" class="btn btn-open-smth ajax filesDialog" data-remote="false" data-target="#myModal" data-toggle="modal">{_'Load files'}</a>
+
+			<br /><br />
+
+		<div class="well row" id="pictures">
+			{if is_object($photogallery)}
+
+				{foreach $photogallery->getPhotos() as $photo}
+					<div class="image-wrap jq_fileBox">
+						<div class="img-thumbnail">
+							<img src="{$basePath}{$photo->getPath()|thumbnail:'system'}" />
+							<input type="hidden" name="files[]" value="{$photo->getPath()}" />
+							<input class="form-control" placeholder="Popisek fotky" type="text" name="fileNames[]" value="{$photo->getTitle()}" />
+							<span class="btn btn-default jq_fileDelete">&times</span>
+						</div>
+					</div>
+				{/foreach}
+
+			{/if}
 		</div>
       </div>
     </div>
@@ -38,33 +56,17 @@
     </div>
     <div id="collapseOne" class="panel-collapse collapse">
       <div class="panel-body">
-      
-		  <a n:href=":Admin:Filesystem:default dialog => true, multiple => true" data-container="#pictures" class="btn btn-primary ajax filesDialog" data-remote="false" data-target="#myModal" data-toggle="modal">{_'Load files'}</a>
-	
-			<br /><br />
-		  
-		  <div class="well row" id="pictures">
-			{if is_object($photogallery)}
-				{foreach $photogallery->getPhotos() as $photo}
-					<div class="col-md-3 jq_fileBox">
-						<div class="img-thumbnail">
-							<img src="{$basePath}{$photo->getPath()|thumbnail:'system'}" />
-							<input type="hidden" name="files[]" value="{$photo->getPath()}" />
-							<input class="form-control" type="text" name="fileNames[]" value="{$photo->getTitle()}" />
-							<span class="btn btn-default jq_fileDelete">&times</span>
-						</div>
-					</div>
-				{/foreach}
-			{/if}
+		<div class="form-group">
+			{label text /} {input text class => 'editor'}
 		</div>
       </div>
-		
+
     </div>
   </div>
 </div>
-	<br />
+	<div class="form-actions">
 		{input submit class => 'btn btn-success'}
-	
+	</div>
 	{/form}
-	
+
 {/block}
