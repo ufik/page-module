@@ -1,9 +1,9 @@
 {block content}
-	
-	{include ../tabs.latte active => 'contact'}
-
+<div class="page-heading">
 	<h1>{$actualPage->getTitle()} - {_'Contact'}</h1>
-	
+	{include ../tabs.latte active => 'contact'}
+</div>
+
 	{control contactForm}
-	
+
 {/block}
