@@ -67,19 +67,19 @@ class Page extends \WebCMS\Module {
 	if (is_object($old)) {
 
 	    // page cloning
-	    $new = new Doctrine\Page;
+	    $new = new Entity\Page;
 	    $new->setText($old->getText());
 	    $new->setPage($transform[$oldPage->getId()]);
 
 	    // photogallery
-	    $oldPhotogallery = $em->getRepository('WebCMS\PageModule\Doctrine\Photogallery')->findOneBy(array(
+	    $oldPhotogallery = $em->getRepository('WebCMS\PageModule\Entity\Photogallery')->findOneBy(array(
 		'page' => $old
 	    ));
 
 	    $em->persist($new);
 
 	    if (is_object($oldPhotogallery)) {
-		$newPhotogallery = new Doctrine\Photogallery;
+		$newPhotogallery = new Entity\Photogallery;
 		$newPhotogallery->setName($oldPhotogallery->getName());
 		$newPhotogallery->setText($oldPhotogallery->getText());
 		$newPhotogallery->setPage($new);
@@ -88,7 +88,7 @@ class Page extends \WebCMS\Module {
 
 		// photos of photogallery
 		foreach ($oldPhotogallery->getPhotos() as $photo) {
-		    $newPhoto = new Doctrine\Photo;
+		    $newPhoto = new Entity\Photo;
 		    $newPhoto->setPath($photo->getPath());
 		    $newPhoto->setTitle($photo->getTitle());
 		    $newPhoto->setPhotogallery($newPhotogallery);
@@ -98,13 +98,13 @@ class Page extends \WebCMS\Module {
 	    }
 
 	    // settings
-	    $settings = $em->getRepository('AdminModule\Setting')->findBy(array(
+	    $settings = $em->getRepository('WebCMS\Entity\Setting')->findBy(array(
 		'section' => 'pageModule' . $oldPage->getId(),
 		'language' => $oldLang
 	    ));
 
 	    foreach ($settings as $s) {
-		$newSetting = new \AdminModule\Setting;
+		$newSetting = new \WebCMS\Entity\Setting;
 		$newSetting->setSection('pageModule' . $transform[$oldPage->getId()]->getId());
 		$newSetting->setLanguage($transform[$oldPage->getId()]->getLanguage());
 		$newSetting->setOptions($s->getOptions());
