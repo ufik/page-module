@@ -2,41 +2,41 @@
 	{if !$settings->get('Hide title', 'pageModule' . $actualPage->getId(), 'checkbox')->getValue()}
 		<h1>{$actualPage->getTitle()}</h1>
 	{/if}
-	
+
 	{!$page->getText()}
-	
+
 	<br class="clearfix" />
 
 	{if $settings->get('Show map', 'pageModule' . $actualPage->getId(), 'checkbox')->getValue()}
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXdXj4q3nUNK2V6WjZrgW-LqgtcClduig&amp;sensor=false"></script>
-		
+
 		{if $settings->get('Enable tracing', 'pageModule' . $actualPage->getId(), 'checkbox')->getValue()}
 			<input type="text" placeholder="{_'Where are you from?'}" id="from" />
 			<a id="calcRoute" href="#">{_'Search route'}</a>
 		{/if}
 		<div id="gMap"></div>
-		
+
 		{if $settings->get('Enable tracing', 'pageModule' . $actualPage->getId(), 'checkbox')->getValue()}
-			<div id="mapPannel"></div>	
+			<div id="mapPannel"></div>
 		{/if}
-		
+
 		<script>
 			{include '../js/Map.js'}
-			
+
 			$(function(){
 				var map = new Map({$settings->get('Latitude', 'pageModule' . $actualPage->getId())->getValue()}, {$settings->get('Longtitude', 'pageModule' . $actualPage->getId())->getValue()});
 			});
-			
+
 		</script>
-		
+
 	{/if}
-	
+
 	{if is_object($photogallery)}
 		{foreach $photogallery->getPhotos() as $photo}
 			<div class="col-sm-6 col-md-3">
 				<div class="img-thumbnail">
 					<a href="{$basePath}{$photo->getPath()}" data-lightbox="photogallery" title="{$photo->getTitle()}">
-						<img src="{$basePath}{$photo->getPath()|thumbnail:'system'}" />
+						<img class="img-responsive" src="{$basePath}{$photo->getPath()|thumbnail:'system'}" />
 					</a>
 				</div>
 			</div>
