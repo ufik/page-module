@@ -33,6 +33,7 @@ class ContactPresenter extends \AdminModule\BasePresenter {
 	public function createComponentContactForm(){
 		
 		$settings = array();
+		$settings[] = $this->settings->get('Telephone', 'pageModule' . $this->actualPage->getId(), 'text', array());
 		$settings[] = $this->settings->get('Latitude', 'pageModule' . $this->actualPage->getId(), 'text', array());
 		$settings[] = $this->settings->get('Longtitude', 'pageModule' . $this->actualPage->getId(), 'text', array());
 		
